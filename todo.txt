@@ -1,0 +1,10 @@
+-- todo --
+
+link libraries to exe
+learn more c++ so i can make changing urls bound to a key in the console
+
+-- in progress --
+
+
+
+-- finished --
