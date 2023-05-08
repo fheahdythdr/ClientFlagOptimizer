@@ -77,6 +77,11 @@ You can find larger Q/A in our [Discord Server!](https://roblox-client-optimizer
 - What happens to time wasting issues and pull requests?
   - Posting time wasting issues and pull requests may result in your account being blocked from the repository. Please ensure all contributions are meaningful and correct. Before posting an issue, try to make sure there is not already one regarding your issue, if there is, we welcome you to comment on it.
 
+## Using custom URLS
+
+To use a custom ClientAppSettings.json url, make a file called custom_url.txt in C:\RCO2.
+Put the custom url in that file, and relaunch RCO2.
+
 ### GDPR, CCPA & Coppa Disclosure
 
 We are **NOT** a data handler or processor, for any queries relating to data transmitted via the network traffic of Roblox Client Optimizer (keep in mind your IP address is disclosed to every website you visit), please contact [Cloudfare](https://www.cloudfare.com), [Fastly](https://www.fastly.com), and [Microsoft](https://www.microsoft.com) directly.
