@@ -202,7 +202,7 @@ void mainThread() {
         std::string latestFflagVersion;
         CURL* req2 = curl_easy_init();
         CURLcode res2;
-        curl_easy_setopt(req2, CURLOPT_URL, "https://roblox-client-optimizer.simulhost.com/flagversion.rco");
+        curl_easy_setopt(req2, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/flagversion.rco");
         curl_easy_setopt(req2, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
         curl_easy_setopt(req2, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
         curl_easy_setopt(req2, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -225,7 +225,7 @@ void mainThread() {
             std::string latestFflagList;
             CURL* req3 = curl_easy_init();
             CURLcode res2;
-            std::string host = "https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json";
+            std::string host = "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/ClientAppSettings.json"; // original: https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json
             std::ifstream ifs(rootDir + "\\custom_url.txt");
             if (ifs) {
                 std::string contents((std::istreambuf_iterator<char>(ifs)),
@@ -267,10 +267,6 @@ int main(int argc, char** argv) {
     //Preinit
     SetConsoleTitle(L"Roblox Client Optimizer");
 
-    if (std::filesystem::exists("C:\\RClientOptimizer2") == true) {
-        std::filesystem::remove_all("C:\\RClientOptimizer2");
-    }
-
     if (!(_dupenv_s(&buf, &sz, "localappdata") == 0 && buf != nullptr)) {
         std::cout << "Error finding LocalAppData folder | 0xB\n";
         std::cin.get();
@@ -304,14 +300,14 @@ int main(int argc, char** argv) {
 
         CURL* req = curl_easy_init();
         CURLcode res;
-        curl_easy_setopt(req, CURLOPT_URL, "https://roblox-client-optimizer.simulhost.com/animegirl.ico");
+        curl_easy_setopt(req, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/animegirl.ico");
         curl_easy_setopt(req, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
         curl_easy_setopt(req, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
         curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, NULL);
         curl_easy_setopt(req, CURLOPT_WRITEDATA, file);
         res = curl_easy_perform(req);
         if (res != CURLE_OK) {
-            std::cout << "NETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | 0x4\n";
+            std::cout << "NETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | 0x4 | ERROR DOWNLOADING ICON\n";
             std::cin.get();
             return 4;
         }
@@ -356,7 +352,7 @@ int main(int argc, char** argv) {
     std::string rcoVersionStr;
     CURL* reqUpd = curl_easy_init();
     CURLcode resUpd;
-    curl_easy_setopt(reqUpd, CURLOPT_URL, "https://roblox-client-optimizer.simulhost.com/programversion.rco");
+    curl_easy_setopt(reqUpd, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/programversion.rco");
     curl_easy_setopt(reqUpd, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
     curl_easy_setopt(reqUpd, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
     curl_easy_setopt(reqUpd, CURLOPT_WRITEFUNCTION, WriteCallback);
