@@ -3,14 +3,14 @@
 #include <filesystem>
 #include <fstream>
 #include <thread>
-#include "curl/curl.h"
+#include <curl/curl.h>
 
 using std::string;
 
 bool isConsoleHidden = false;
 bool isRcoEnabled = false;
 
-std::string rootDir("C:\\Program Files (x86)\\RCO2");
+std::string rootDir("C:\\RCO2");
 string robloxVersionFolder;
 string localRobloxVersionFolder;
 
@@ -114,7 +114,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 void printMainText() {
     system("cls");
-    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X\n\nRCO is currently: ";
+    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified by Tanki\n\nRCO is currently: ";
     if (isRcoEnabled) {
         SetConsoleTextAttribute(hConsole, 10);
         std::cout << "Enabled";
@@ -225,7 +225,14 @@ void mainThread() {
             std::string latestFflagList;
             CURL* req3 = curl_easy_init();
             CURLcode res2;
-            curl_easy_setopt(req3, CURLOPT_URL, "https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json");
+            std::string host = "https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json";
+            std::ifstream ifs(rootDir + "\\custom_url.txt");
+            if (ifs) {
+                std::string contents((std::istreambuf_iterator<char>(ifs)),
+                    (std::istreambuf_iterator<char>()));
+                host = contents;
+            }
+            curl_easy_setopt(req3, CURLOPT_URL, host);
             curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
             curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
             curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
