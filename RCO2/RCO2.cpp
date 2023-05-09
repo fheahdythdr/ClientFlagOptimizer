@@ -14,6 +14,12 @@ std::string rootDir("C:\\RCO2");
 string robloxVersionFolder;
 string localRobloxVersionFolder;
 
+// original: https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json
+std::string host = "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/ClientAppSettings.json";
+std::string oldhost;
+
+
+
 char* buf = nullptr;
 size_t sz = 0;
 
@@ -52,6 +58,18 @@ int traySystem() {
 
     return static_cast<int>(msg.wParam);
 }
+
+void SetHost() {
+    std::ifstream ifs(rootDir + "\\custom_url.txt");;
+    if (ifs) {
+        std::string contents((std::istreambuf_iterator<char>(ifs)),
+            (std::istreambuf_iterator<char>()));
+        if (contents != host) {
+            oldhost = host;
+            host = contents;
+        }
+    }
+};
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
     static NOTIFYICONDATA nid;
@@ -150,12 +168,76 @@ static auto WriteCallback(char* ptr, size_t size, size_t nmemb, void* userdata) 
     return size * nmemb;
 }
 
+void SetURLThread() {
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        SetHost();
+        std::string robloxVersionStr;
+        CURL* req = curl_easy_init();
+        CURLcode res;
+        curl_easy_setopt(req, CURLOPT_URL, "https://setup.rbxcdn.com/version"); // an actually secure version endpoint...
+        curl_easy_setopt(req, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+        curl_easy_setopt(req, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+        curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(req, CURLOPT_WRITEDATA, &robloxVersionStr);
+        res = curl_easy_perform(req);
+        if (res != CURLE_OK) {
+            std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x5\n";
+            curl_easy_cleanup(req);
+            std::this_thread::sleep_for(std::chrono::milliseconds(30000));
+            printMainText();
+            continue;
+        }
+        curl_easy_cleanup(req);
+        if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr) == false) {
+            for (const auto& e : std::filesystem::directory_iterator(robloxVersionFolder)) {
+                if (e.is_directory()) {
+                    for (const auto& e2 : std::filesystem::directory_iterator(e)) {
+                        if (e2.path().string().ends_with("COPYRIGHT.txt")) {
+                            robloxVersionStr = e.path().string().erase(0, robloxVersionFolder.length() + 1);
+                            goto exitNest;
+                        }
+                    }
+                }
+            }
+        }
+        exitNest:
+        if (oldhost != host) { //We need to do an update!!!!
+            if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings") == false) {
+                std::filesystem::create_directory(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings");
+            }
+
+            std::string latestFflagList;
+            CURL* req3 = curl_easy_init();
+            CURLcode res2;
+            curl_easy_setopt(req3, CURLOPT_URL, host);
+            curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+            curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+            curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(req3, CURLOPT_WRITEDATA, &latestFflagList);
+            res2 = curl_easy_perform(req3);
+            if (res2 != CURLE_OK) {
+                std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x8\n";
+                curl_easy_cleanup(req3);
+                std::this_thread::sleep_for(std::chrono::milliseconds(30000));
+                printMainText();
+                continue;
+            }
+            curl_easy_cleanup(req3);
+
+            std::ofstream fflagList;
+            fflagList.open(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json");
+            fflagList << latestFflagList;
+            fflagList.close();
+        }
+    }
+}
+
 void mainThread() {
     while (true) {
         while (!isRcoEnabled) {
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
-
         //Bit of error checking
         std::string robloxVersionStr;
         CURL* req = curl_easy_init();
@@ -217,7 +299,7 @@ void mainThread() {
         }
         curl_easy_cleanup(req2);
 
-        if (storedFflagVersion != (latestFflagVersion + ' ') || std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == false) { //We need to do an update!!!!
+        if (storedFflagVersion != (latestFflagVersion + ' ') || std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == false || oldhost != host) { //We need to do an update!!!!
             if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings") == false) {
                 std::filesystem::create_directory(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings");
             }
@@ -225,13 +307,6 @@ void mainThread() {
             std::string latestFflagList;
             CURL* req3 = curl_easy_init();
             CURLcode res2;
-            std::string host = "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/ClientAppSettings.json"; // original: https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json
-            std::ifstream ifs(rootDir + "\\custom_url.txt");
-            if (ifs) {
-                std::string contents((std::istreambuf_iterator<char>(ifs)),
-                    (std::istreambuf_iterator<char>()));
-                host = contents;
-            }
             curl_easy_setopt(req3, CURLOPT_URL, host);
             curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
             curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
@@ -264,6 +339,7 @@ void mainThread() {
 }
 
 int main(int argc, char** argv) {
+    SetHost();
     //Preinit
     SetConsoleTitle(L"Roblox Client Optimizer");
 
@@ -443,6 +519,8 @@ int main(int argc, char** argv) {
 
     //Call the main fflag updating thread
     std::thread t2(mainThread);
+
+    std::thread t3(SetURLThread);
 
     //Input loop
     while (true) {
