@@ -5,12 +5,24 @@
 #include <thread>
 #include <curl/curl.h>
 
+// thanks stackoverflow https://stackoverflow.com/questions/216823/how-to-trim-an-stdstring
+
+const char* ws = " \t\n\r\f\v";
+
+// trim from end of string (right)
+inline std::string& rtrim(std::string& s, const char* t = ws)
+{
+    s.erase(s.find_last_not_of(t) + 1);
+    return s;
+}
+
 using std::string;
 
 bool isConsoleHidden = false;
 bool isRcoEnabled = false;
 
 std::string rootDir("C:\\RCO2");
+string updDir("C:\\RCO2Updater");
 string robloxVersionFolder;
 string localRobloxVersionFolder;
 
@@ -18,7 +30,24 @@ string localRobloxVersionFolder;
 std::string host = "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/ClientAppSettings.json";
 std::string oldhost;
 
+static auto WriteCallback(char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t { //Thank you stackoverflow... (https://stackoverflow.com/a/60516083)
+    static_cast<string*>(userdata)->append(ptr, size * nmemb);
+    return size * nmemb;
+}
 
+string curl_get(string host) {
+    string data;
+    CURL* req3 = curl_easy_init();
+    CURLcode res2;
+    curl_easy_setopt(req3, CURLOPT_URL, host);
+    curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+    curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+    curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(req3, CURLOPT_WRITEDATA, data);
+    res2 = curl_easy_perform(req3);
+    curl_easy_cleanup(req3);
+    return data;
+}
 
 char* buf = nullptr;
 size_t sz = 0;
@@ -161,11 +190,6 @@ void printMainText() {
     SetConsoleTextAttribute(hConsole, 6);
     std::cout << " RCO with ALT+F4 or any other similar method.\n";
     SetConsoleTextAttribute(hConsole, 7);
-}
-
-static auto WriteCallback(char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t { //Thank you stackoverflow... (https://stackoverflow.com/a/60516083)
-    static_cast<string*>(userdata)->append(ptr, size * nmemb);
-    return size * nmemb;
 }
 
 void SetURLThread() {
@@ -359,11 +383,11 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    const string rcoVersionConstant = "2.0.6";
+    const string rcoVersionConstant = "2.0.8";
 
     std::ofstream rcoVerFile;
     rcoVerFile.open(rootDir + "\\programversion.rco");
-    rcoVerFile << rcoVersionConstant+"\n";
+    rcoVerFile << rcoVersionConstant;
     rcoVerFile.close();
 
     if (std::filesystem::exists(rootDir + "\\animegirl.ico") == false) {
@@ -426,6 +450,7 @@ int main(int argc, char** argv) {
     rcoVersionFile.close();
 
     std::string rcoVersionStr;
+    string curver = rcoVersionConstant;
     CURL* reqUpd = curl_easy_init();
     CURLcode resUpd;
     curl_easy_setopt(reqUpd, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/programversion.rco");
@@ -441,25 +466,18 @@ int main(int argc, char** argv) {
         goto skipUpdate;
     }
     curl_easy_cleanup(reqUpd);
-
-    if ((rcoVersionStr + ' ') != storedRcoVersion) {
-        std::cout << rcoVersionStr << "\n";
-        std::cout << storedRcoVersion << "\n";
-        //CreateProcess code from https://stackoverflow.com/a/15440094
-
+    
+    if (rtrim(rcoVersionStr) != rtrim(curver)) {
+        std::cout << rtrim(rcoVersionStr) + " " + rtrim(curver);
         STARTUPINFOA si;
         PROCESS_INFORMATION pi;
 
         ZeroMemory(&si, sizeof(si));
         si.cb = sizeof(si);
         ZeroMemory(&pi, sizeof(pi));
-
-        CreateProcessA((rootDir + "\\RCO2Installer.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
-        CloseHandle(pi.hProcess);
-        CloseHandle(pi.hThread);
+        CreateProcessA((updDir + "\\RCO-Updater.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
         exit(0);
     }
-
     skipUpdate:
 
     if (std::filesystem::exists(robloxVersionFolder) == true && std::filesystem::exists(localRobloxVersionFolder) == true) {
@@ -520,6 +538,7 @@ int main(int argc, char** argv) {
     //Call the main fflag updating thread
     std::thread t2(mainThread);
 
+    // Call the host updating thread
     std::thread t3(SetURLThread);
 
     //Input loop
