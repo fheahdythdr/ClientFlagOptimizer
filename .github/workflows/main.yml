@@ -1,20 +1,14 @@
 name: Auto-Update FFlags
 on:
   schedule:
-    - cron: '* * * * *' # run every hour
+    - cron: '* * * * *'
 jobs:
   api-request:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: GitHub API Request
-        uses: octokit/request-action@v2.1.0
-        id: get-commits
-        with:
-          # HTTP Verb + path as shown on https://developer.github.com/v3/
-          route: GET /repos/L8X/Roblox-Client-Optimizer/commit/ClientAppSettings.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Print latest commit message
-        run: echo "${{ steps.get-commits.outputs.data[0].commit }}"
+      - name: Install simple-git
+        run: npm i simple-git
+      - name: Run nodejs file
+        run: node ./workflow-files/update
