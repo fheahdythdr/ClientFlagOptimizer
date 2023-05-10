@@ -8,6 +8,7 @@
     const repo = simpleGit();
     await repo.clone('https://github.com/username/repo.git', 'localdir');
     const fs = require('fs')
+    
     const fetch = await import('node-fetch').then(m => m.default)
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
     const Settings = await data.json()
@@ -17,7 +18,9 @@
             New[name] = Settings[name];
         }
     }
-    fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
+    if (fs.readFileSync('localdir/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
+        fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
 
-    await repo.cwd('localdir').add(filePath).commit('Update file').push();
+        await repo.cwd('localdir').add(filePath).commit('Update file').push();
+    }
 })()
