@@ -13,10 +13,7 @@ jobs:
         id: get-commits
         with:
           # HTTP Verb + path as shown on https://developer.github.com/v3/
-          route: GET /repos/{owner}/{repo}/commit
-          path: "ClientAppSettings.json"
-          owner: "L8X" # replace with the repository owner's username or organization name
-          repo: "Roblox-Client-Optimizer" # replace with the name of the repository
+          route: GET /repos/L8X/Roblox-Client-Optimizer/commit/ClientAppSettings.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Print latest commit message
