@@ -1,12 +1,14 @@
 (async () => {
     const simpleGit = require('simple-git');
+    const user = process.env.gituser;
+    const pass = process.env.gitpass
 
     const names = ["DFFlag"];
     const values = [500];
     const includes = ["FFlag"];
 
     const repo = simpleGit();
-    await repo.clone('https://github.com/fheahdythdr/rco-but-it-uses-different-fflags', 'localdir');
+    await repo.clone(`https://${user}:${pass}@github.com/fheahdythdr/rco-but-it-uses-different-fflags`, 'localdir');
     const fs = require('fs')
     
     const fetch = await import('node-fetch').then(m => m.default)
