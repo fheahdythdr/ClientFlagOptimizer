@@ -6,7 +6,7 @@
     const includes = ["FFlag"];
 
     const repo = simpleGit();
-    await repo.clone('https://github.com/username/repo.git', 'localdir');
+    await repo.clone('https://github.com/fheahdythdr/rco-but-it-uses-different-fflags', 'localdir');
     const fs = require('fs')
     
     const fetch = await import('node-fetch').then(m => m.default)
