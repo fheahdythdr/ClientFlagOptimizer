@@ -8,6 +8,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install newer nodejs
+        run: nvm install 18.16.0
+      - name: Use newer nodejs
+        run: nvm use 18.16.0
       - name: Install simple-git
         run: npm i simple-git
       - name: Run nodejs file
