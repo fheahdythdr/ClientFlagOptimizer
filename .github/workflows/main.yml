@@ -18,6 +18,6 @@ jobs:
           owner: "L8X" # replace with the repository owner's username or organization name
           repo: "Roblox-Client-Optimizer" # replace with the name of the repository
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Print latest commit message
         run: echo "${{ steps.get-commits.outputs.data.[0].commit.message }}"
