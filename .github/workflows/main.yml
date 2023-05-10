@@ -20,4 +20,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Print latest commit message
-        run: echo "${{ steps.get-commits.outputs.data.[0].commit.message }}"
+        run: echo "${{ steps.get-commits.outputs.data[0].commit.message }}"
