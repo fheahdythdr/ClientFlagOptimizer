@@ -1,0 +1,23 @@
+name: Auto-Update FFlags
+on:
+  schedule:
+    - cron: '* * * * *' # run every hour
+jobs:
+  api-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: GitHub API Request
+        uses: octokit/request-action@v2.1.0
+        id: get-commits
+        with:
+          # HTTP Verb + path as shown on https://developer.github.com/v3/
+          route: GET /repos/{owner}/{repo}/commit
+          path: "ClientAppSettings.json"
+          owner: "L8X" # replace with the repository owner's username or organization name
+          repo: "Roblox-Client-Optimizer" # replace with the name of the repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Print latest commit message
+        run: echo "${{ steps.get-commits.outputs.data.[0].commit.message }}"
