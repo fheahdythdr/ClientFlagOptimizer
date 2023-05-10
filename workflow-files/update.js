@@ -1,13 +1,12 @@
-const simpleGit = require('simple-git');
-
-const names = ["DFFlag"];
-const values = [500];
-const includes = ["FFlag"];
-
-const repo = simpleGit();
-await repo.clone('https://github.com/username/repo.git', 'localdir');
-
 (async () => {
+    const simpleGit = require('simple-git');
+
+    const names = ["DFFlag"];
+    const values = [500];
+    const includes = ["FFlag"];
+
+    const repo = simpleGit();
+    await repo.clone('https://github.com/username/repo.git', 'localdir');
     const fs = require('fs')
     const fetch = await import('node-fetch').then(m => m.default)
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
@@ -19,6 +18,6 @@ await repo.clone('https://github.com/username/repo.git', 'localdir');
         }
     }
     fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
-})()
 
-await repo.cwd('localdir').add(filePath).commit('Update file').push();
+    await repo.cwd('localdir').add(filePath).commit('Update file').push();
+})()
