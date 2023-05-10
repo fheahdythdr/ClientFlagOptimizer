@@ -23,6 +23,6 @@
     if (fs.readFileSync('localdir/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
         fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
 
-        await repo.cwd('localdir').add(filePath).commit('Update file').push();
+        await repo.cwd('localdir').add('localdir/ClientAppSettings.json').commit('Update file').push();
     }
 })()
