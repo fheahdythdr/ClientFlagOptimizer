@@ -25,7 +25,6 @@ const includes = ["FFlag"];
 
 (async () => {
     const fs = require('fs')
-    fs.writeFileSync(__dirname + '/write.lua', ``)
     const fetch = await import('node-fetch').then(m => m.default)
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
     const Settings = await data.json()
