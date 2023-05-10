@@ -9,7 +9,7 @@
 
     const repo = simpleGit();
     repo.env({ SSH_AUTH_SOCK: process.env.SSH_AUTH_SOCK, GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no' });
-    await repo.clone(`git@github.com/fheahdythdr/rco-but-it-uses-different-fflags.git`, 'localdir');
+    await repo.clone(`https://${user}:${pass}@github.com/fheahdythdr/rco-but-it-uses-different-fflags`, 'localdir');
     const fs = require('fs')
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
     const Settings = await data.json()
