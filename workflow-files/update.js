@@ -21,7 +21,5 @@
     }
     if (fs.readFileSync('localdir/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
         fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
-        const { exec } = require('child_process');
-        exec('git add localdir/ClientAppSettings.json && git commit -m "Updated FFlags && git push origin master')
     }
 })()
