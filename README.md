@@ -82,6 +82,7 @@ You can find larger Q/A in our [Discord Server!](https://roblox-client-optimizer
 To use a custom ClientAppSettings.json url, make a file called custom_url.txt in C:\RCO2.
 Put the custom url in that file, and relaunch RCO2.
 It has to be the raw URL that gives the raw JSON, like raw github urls.
+If you want some configs, go to [my fflag repo](https://github.com/fheahdythdr/rco-fflags)
 
 ### GDPR, CCPA & Coppa Disclosure
 
