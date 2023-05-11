@@ -8,7 +8,7 @@
     const includes = ["FFlag"];
 
     const repo = simpleGit();
-    repo.env({ ...process.env, SSH_AUTH_SOCK: process.env.SSH_AUTH_SOCK, GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no' });
+    repo.env({ ...process.env, GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no' });
     await repo.clone(`https://${user}:${pass}@github.com/fheahdythdr/rco-but-it-uses-different-fflags`, 'localdir');
     const fs = require('fs')
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
@@ -21,7 +21,7 @@
     }
     if (fs.readFileSync('localdir/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
         fs.writeFileSync('localdir/ClientAppSettings.json', JSON.stringify(New));
-
-        await repo.cwd('localdir').add('ClientAppSettings.json').commit('Update file').push();
+        const { exec } = require('child_process');
+        exec('git add localdir/ClientAppSettings.json && git commit -m "Updated FFlags && git push origin master')
     }
 })()
