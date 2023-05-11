@@ -27,4 +27,4 @@ jobs:
       - name: Commit to repo
         run: git commit -m "Updated FFlags"
       - name: Push to repo
-        run: git push origin master
+        run: git push origin main
