@@ -22,9 +22,9 @@ jobs:
         run: git config --global user.name ${{ secrets.gituser }}
       - name: Run nodejs file
         run: node ./workflow-files/update
-      - name: Add repo
-        run: git add localdir/
+      - name: Add changed file
+        run: git add localdir/ClientAppSettings.json
       - name: Commit to repo
-        run: git commit -m "Updated FFlags" localdir/ClientAppSettings.json
+        run: git commit -m "Updated FFlags"
       - name: Push to repo
         run: git push origin main
