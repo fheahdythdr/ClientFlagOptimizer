@@ -13,5 +13,6 @@
     }
     if (fs.readFileSync('./local/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
         fs.writeFileSync('./local/ClientAppSettings.json', JSON.stringify(New));
+        process.env.push = true;
     }
 })()
