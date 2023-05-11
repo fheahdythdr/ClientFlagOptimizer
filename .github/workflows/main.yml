@@ -23,8 +23,7 @@ jobs:
       - name: Run nodejs file
         run: node ./workflow-files/update
       - name: Add changed file
-        working-directory: localdir
-        run: git add localdir/ClientAppSettings.json
+        run: git add ClientAppSettings.json
       - name: Commit to repo
         run: git commit -m "Updated FFlags"
       - name: Push to repo
