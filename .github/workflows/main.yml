@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '* * * * *'
 jobs:
-  api-request:
+  update-fflags:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,8 +22,8 @@ jobs:
         run: git config --global user.name ${{ secrets.gituser }}
       - name: Run nodejs file
         run: node ./workflow-files/update
-      - name: Add modified file
-        run: git add localdir/ClientAppSettings.json
+      - name: Add repo
+        run: git add localdir/
       - name: Commit to repo
         run: git commit -m "Updated FFlags"
       - name: Push to repo
