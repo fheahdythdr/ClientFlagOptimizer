@@ -25,6 +25,6 @@ jobs:
       - name: Add repo
         run: git add localdir/
       - name: Commit to repo
-        run: git commit -m "Updated FFlags"
+        run: git commit -m "Updated FFlags" localdir/ClientAppSettings.json
       - name: Push to repo
         run: git push origin main
