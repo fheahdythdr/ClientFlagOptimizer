@@ -1,15 +1,7 @@
 (async () => {
-    const simpleGit = require('simple-git');
-    const user = process.env.gituser;
-    const pass = process.env.gitpass
-
     const names = ["DFFlag"];
     const values = [500];
     const includes = ["FFlag"];
-
-    const repo = simpleGit();
-    repo.env({ ...process.env, GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no' });
-    await repo.clone(`https://${user}:${pass}@github.com/fheahdythdr/rco-but-it-uses-different-fflags`, './local');
     const fs = require('fs')
     const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
     const Settings = await data.json()
