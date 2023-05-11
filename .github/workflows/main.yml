@@ -21,8 +21,10 @@ jobs:
       - name: Clone repo
         run: git clone https://github.com/fheahdythdr/rco-but-it-uses-different-fflags
       - name: Run nodejs file
+        id: update_fflags
         run: node ./workflow-files/update
       - name: Add changed file, commit and push to repo
+        if: ${{ steps.update_fflags.outputs.result }} == true
         run: |
           git add rco-but-it-uses-different-fflags/ClientAppSettings.json
           git commit -m "Updated FFlags"
