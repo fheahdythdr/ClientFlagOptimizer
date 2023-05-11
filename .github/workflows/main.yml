@@ -22,6 +22,8 @@ jobs:
         run: git config --global user.name ${{ secrets.gituser }}
       - name: Run nodejs file
         run: node ./workflow-files/update
+      - name: Switch directories
+        run: cd local
       - name: Add changed file
         run: git add ClientAppSettings.json
       - name: Commit to repo
