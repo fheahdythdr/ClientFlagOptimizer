@@ -3,7 +3,7 @@
     const values = [500];
     const includes = ["FFlag"];
     const fs = require('fs')
-    const data = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/ClientAppSettings.json")
+    const data = await fetch("https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json")
     const Settings = await data.json()
     const New = {};
     for (const name of Object.keys(Settings)) {
