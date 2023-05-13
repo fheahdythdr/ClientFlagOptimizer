@@ -32,8 +32,6 @@ If any errors happen, create an issue and try to explain what happened or provid
 - What are flags?
   - The Roblox engine uses a system called fast flags as part of the deployment process. When code is shipped, not all of it is active by default. Rather, the changes are enabled and disabled dynamically via `FFlags`, even after the code is live in production. We welcome you to read more about flags [here](https://devforum.roblox.com/t/254517) and [here](https://github.com/MaximumADHD/Roblox-FFlag-Tracker).
 
-You can find larger Q/A in our [Discord Server!](https://roblox-client-optimizer.simulhost.com/discord)
-
 ## Disclaimers
 
 - Do we collect and store user data?
