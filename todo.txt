@@ -2,6 +2,8 @@
 
 link libraries to exe
 learn more c++ so i can make changing urls bound to a key in the console
+figure out how to detect file creation, then detect file changes if said file's name is custom_url.txt
+implement the 3 keys you can press in src repo's latest js files (i - install, u - uninstall, q - quit)
 
 -- in progress --
 
