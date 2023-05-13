@@ -4,6 +4,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCO2", "RCO2\RCO2.vcxproj", "{B75E22D3-47D4-45F2-8D4D-EFA9BB8DBF0E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCO-Updater", "RCO-Updater\RCO-Updater.vcxproj", "{AE56971B-1305-4AB7-B650-3F01E45B6A5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -18,6 +20,14 @@ Global
 		{B75E22D3-47D4-45F2-8D4D-EFA9BB8DBF0E}.Release|x64.ActiveCfg = Release|x64
 		{B75E22D3-47D4-45F2-8D4D-EFA9BB8DBF0E}.Release|x86.ActiveCfg = Release|Win32
 		{B75E22D3-47D4-45F2-8D4D-EFA9BB8DBF0E}.Release|x86.Build.0 = Release|Win32
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Debug|x64.ActiveCfg = Debug|x64
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Debug|x64.Build.0 = Debug|x64
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Debug|x86.ActiveCfg = Debug|Win32
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Debug|x86.Build.0 = Debug|Win32
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Release|x64.ActiveCfg = Release|x64
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Release|x64.Build.0 = Release|x64
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Release|x86.ActiveCfg = Release|Win32
+		{AE56971B-1305-4AB7-B650-3F01E45B6A5E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
