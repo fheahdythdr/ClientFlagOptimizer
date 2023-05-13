@@ -24,7 +24,8 @@ When using the source repo's URL (https://roblox-client-optimizer.simulhost.com/
 - Enables the `Parallel Humanoid Manager`
 - Enables `Batch Asset Api`
 - Allows you to switch JSON urls
-When using a custom URL, it'll depend what gets activated in the url.
+
+When using a custom URL, features will depend on what gets activated in the url.
 
 ## Question & Answer
 
