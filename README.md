@@ -1,8 +1,11 @@
 ## About
 
 Roblox Client Optimizer tweaks flags to optimize your Roblox client. Click [here](https://github.com/fheahdythdr/rco-but-it-uses-different-fflags/releases) to download our latest version.
+
 As of now, it seems like the main RCO repo is going towards using NodeJS to run the installer and the main file.
+
 This repo is staying in C++, and I will try my best to implement any features they add into this version.
+
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
 ## Features
