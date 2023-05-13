@@ -10,6 +10,7 @@ If any errors happen, create an issue and try to explain what happened or provid
 
 ## Features
 
+When using the source repo's URL (https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json), you'll get these.
 - Unlocks FPS (frames per second)
 - Optimizes caching, graphics, and textures
 - Increases user privacy
@@ -22,6 +23,8 @@ If any errors happen, create an issue and try to explain what happened or provid
 - Enables `Quick Game Launch`
 - Enables the `Parallel Humanoid Manager`
 - Enables `Batch Asset Api`
+- Allows you to switch JSON urls
+When using a custom URL, it'll depend what gets activated in the url.
 
 ## Question & Answer
 
