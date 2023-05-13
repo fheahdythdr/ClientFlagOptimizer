@@ -1,36 +1,9 @@
-<div align="center">
-	<a href="https://github.com/L8X/Roblox-Client-Optimizer">
-		<img height=200 src="https://user-images.githubusercontent.com/100449899/233845084-569622a4-e8d3-4ab4-9ebc-7e03d0f01d0c.png"/>
-	</a>
-	<h1>Roblox Client Optimizer</h1>
-	<p>Roblox Client Optimizer tweaks flags to optimize your Roblox client.</p>
-	<p>
-		<a href="https://github.com/L8X/Roblox-Client-Optimizer/releases">
-			<img src="https://img.shields.io/github/v/release/L8X/Roblox-Client-Optimizer?label=Version&logo=GitHub&color=green" alt="Version"/>
-		</a>
-		<a href="https://github.com/L8X/Roblox-Client-Optimizer">
-			<img src="https://img.shields.io/github/forks/L8X/Roblox-Client-Optimizer?label=Forks&logo=GitHub" alt="Forks"/>
-		</a>
-		<a href="https://github.com/L8X/Roblox-Client-Optimizer">
-			<img src="https://img.shields.io/github/stars/L8X/Roblox-Client-Optimizer?label=Stars&logo=GitHub&color=yellow" alt="Stars"/>
-		</a>
-		<a href="https://github.com/L8X/Roblox-Client-Optimizer/blob/main/LICENSE">
-			<img src="https://img.shields.io/github/license/L8X/Roblox-Client-Optimizer?label=License&logo=GitHub" alt="Forks"/>
-		</a>
-	</p>
-</div>
-
 ## About
 
-Roblox Client Optimizer tweaks flags to optimize your Roblox client. Click [here](https://github.com/L8X/Roblox-Client-Optimizer/releases) to download our latest version.
-
-## Community
-
-We now have an official RCO community Discord server! Join [here!](https://roblox-client-optimizer.simulhost.com/discord)
-
-## Issue reporting / Support
-
-Due to an influx of users on our github, we have moved issues to our Discord server! please join at the above Community section!
+Roblox Client Optimizer tweaks flags to optimize your Roblox client. Click [here](https://github.com/fheahdythdr/rco-but-it-uses-different-fflags/releases) to download our latest version.
+As of now, it seems like the main RCO repo is going towards using NodeJS to run the installer and the main file.
+This repo is staying in C++, and I will try my best to implement any features they add into this version.
+If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
 ## Features
 
@@ -47,14 +20,6 @@ Due to an influx of users on our github, we have moved issues to our Discord ser
 - Enables the `Parallel Humanoid Manager`
 - Enables `Batch Asset Api`
 
-## Official Websites List
-The only official websites of RCO are:
-1. https://github.com/L8X/Roblox-Client-Optimizer (Official GitHub)
-2. https://roblox-client-optimizer.simulhost.com (Official Website)
-3. https://roblox-client-optimizer.simulhost.com/discord (Official Discord)
-3. https://rco.ddns.net (Official Website - Deprecated)
-
-Anything outside of these four pages (and any links listed on them) claiming to be RCO are NOT RCO and are attempting to defraud you.
 ## Question & Answer
 
 - Why not manually install flags?
@@ -68,7 +33,6 @@ Anything outside of these four pages (and any links listed on them) claiming to 
   - The Roblox engine uses a system called fast flags as part of the deployment process. When code is shipped, not all of it is active by default. Rather, the changes are enabled and disabled dynamically via `FFlags`, even after the code is live in production. We welcome you to read more about flags [here](https://devforum.roblox.com/t/254517) and [here](https://github.com/MaximumADHD/Roblox-FFlag-Tracker).
 
 You can find larger Q/A in our [Discord Server!](https://roblox-client-optimizer.simulhost.com/discord)
-
 
 ## Disclaimers
 
