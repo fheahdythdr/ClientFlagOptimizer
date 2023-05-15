@@ -11,7 +11,5 @@
             New[name] = Settings[name];
         }
     }
-    if (fs.readFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', 'utf8') != JSON.stringify(New)) {
-        fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(New));
-    }
+    fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(New));
 })()
