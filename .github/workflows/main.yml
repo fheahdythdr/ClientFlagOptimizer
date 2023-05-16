@@ -27,5 +27,5 @@ jobs:
         continue-on-error: true
         run: |
           git add rco-but-it-uses-different-fflags/ClientAppSettings.json
-          git commit -m "Updated FFlags"
+          git commit -a -m "Updated FFlags"
           git push origin main
