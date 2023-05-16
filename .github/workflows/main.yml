@@ -26,8 +26,6 @@ jobs:
       - name: Add changed file, commit and push to repo
         continue-on-error: true
         run: |
-          git status
-          git add rco-but-it-uses-different-fflags/ClientAppSettings.json
-          git status
+          git add /home/runner/work/rco-but-it-uses-different-fflags/rco-but-it-uses-different-fflags/ClientAppSettings.json
           git commit -a -m "Updated FFlags"
           git push origin main
