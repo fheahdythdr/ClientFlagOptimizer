@@ -19,7 +19,7 @@ jobs:
       - name: Set git user
         run: git config --global user.name ${{ secrets.gituser }}
       - name: Clone repo
-        run: git clone https://github.com/fheahdythdr/rco-but-it-uses-different-fflags
+        run: git clone git@github.com:fheahdythdr/rco-but-it-uses-different-fflags
       - name: Run nodejs file
         id: update_fflags
         run: node ./workflow-files/update
