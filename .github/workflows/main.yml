@@ -28,5 +28,6 @@ jobs:
         run: |
           cd rco-but-it-uses-different-fflags
           git add ClientAppSettings.json
+          git add flagversion.rco
           git commit -a -m "Updated FFlags"
           git push origin main
