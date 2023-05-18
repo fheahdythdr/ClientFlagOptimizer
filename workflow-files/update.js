@@ -3,7 +3,9 @@
     const values = [500];
     const includes = ["FFlag"];
     const fs = require('fs')
-    const data = await fetch("https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json")
+    const data = await fetch("https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json");
+    const fdata = await fetch("https://raw.githubusercontent.com/L8X/Roblox-Client-Optimizer/main/assets/flagversion.rco");
+    const fflagver = await fdata.text();
     const Settings = await data.json()
     const New = {};
     for (const name of Object.keys(Settings)) {
@@ -12,4 +14,5 @@
         }
     }
     fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(New));
+    fs.writeFileSync('./rco-but-it-uses-different-fflags/flagversion.rco', fflagver);
 })()
