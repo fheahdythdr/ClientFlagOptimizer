@@ -10,6 +10,7 @@
     const New = {};
     for (const name of Object.keys(Settings)) {
         if (includes.some((val) => name.includes(val)) || names.some((val) => name.startsWith(val)) || values.some((val) => Settings[name] == val)) {
+            if (name.includes("TaskSchedulerTargetFps")) Settings[name] = 999999
             New[name] = Settings[name];
         }
     }
