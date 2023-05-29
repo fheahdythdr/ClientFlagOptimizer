@@ -161,12 +161,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 void printMainText() {
     system("cls");
-    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified by Tanki\n\nRCO is currently: ";
+    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified, now maintained by Tanki (fheahdythdr)\n\nRCO is currently: ";
     if (isRcoEnabled) {
         SetConsoleTextAttribute(hConsole, 10);
         std::cout << "Enabled";
         SetConsoleTextAttribute(hConsole, 7);
-        std::cout << "\nPress enter to ";
+        std::cout << "\nPress d to ";
         SetConsoleTextAttribute(hConsole, 12);
         std::cout << "Disable";
         SetConsoleTextAttribute(hConsole, 7);
@@ -176,7 +176,7 @@ void printMainText() {
         SetConsoleTextAttribute(hConsole, 12);
         std::cout << "Disabled";
         SetConsoleTextAttribute(hConsole, 7);
-        std::cout << "\nPress enter to ";
+        std::cout << "\nPress e to ";
         SetConsoleTextAttribute(hConsole, 10);
         std::cout << "Enable";
         SetConsoleTextAttribute(hConsole, 7);
@@ -188,7 +188,7 @@ void printMainText() {
     SetConsoleTextAttribute(hConsole, 12);
     std::cout << "close";
     SetConsoleTextAttribute(hConsole, 6);
-    std::cout << " RCO with ALT+F4 or any other similar method.\n";
+    std::cout << " RCO with ALT+F4 or any other similar method.\nType url to change FFlag url.\nCurrent url: " + host + "\n";
     SetConsoleTextAttribute(hConsole, 7);
 }
 
@@ -550,10 +550,10 @@ int main(int argc, char** argv) {
         isRcoEnabled = !isRcoEnabled;
         std::ofstream isEnabledFile;
         isEnabledFile.open(rootDir + "\\isEnabled.rco");
-        if (isRcoEnabled) {
+        if (t == "e") {
             isEnabledFile << "t";
         }
-        else {
+        else if (t == "d") {
             isEnabledFile << "f";
             std::string robloxVersionStr;
             CURL* req = curl_easy_init();
@@ -572,6 +572,82 @@ int main(int argc, char** argv) {
             if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == true) {
                 remove((robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json").c_str());
             }
+        }
+        else if (t == "url") {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            string c_url; //Throwaway
+            std::cout << "Enter new FFlag url:\n";
+            std::getline(std::cin, c_url);
+            std::ofstream url;
+            url.open(rootDir + "\\custom_url.txt");
+            url << c_url;
+            url.close();
+
+            std::ifstream ifs(rootDir + "\\custom_url.txt");;
+            if (ifs) {
+                std::string contents((std::istreambuf_iterator<char>(ifs)),
+                    (std::istreambuf_iterator<char>()));
+                oldhost = host;
+                host = c_url;
+            }
+
+            //Bit of error checking
+            std::string robloxVersionStr;
+            CURL* req = curl_easy_init();
+            CURLcode res;
+            curl_easy_setopt(req, CURLOPT_URL, "https://setup.rbxcdn.com/version"); // an actually secure version endpoint...
+            curl_easy_setopt(req, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+            curl_easy_setopt(req, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+            curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(req, CURLOPT_WRITEDATA, &robloxVersionStr);
+            res = curl_easy_perform(req);
+            if (res != CURLE_OK) {
+                std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0xBruh\n";
+                curl_easy_cleanup(req);
+                std::this_thread::sleep_for(std::chrono::milliseconds(30000));
+                printMainText();
+                continue;
+            }
+            curl_easy_cleanup(req);
+            if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr) == false) {
+                for (const auto& e : std::filesystem::directory_iterator(robloxVersionFolder)) {
+                    if (e.is_directory()) {
+                        for (const auto& e2 : std::filesystem::directory_iterator(e)) {
+                            if (e2.path().string().ends_with("COPYRIGHT.txt")) {
+                                robloxVersionStr = e.path().string().erase(0, robloxVersionFolder.length() + 1);
+                                goto exitNest;
+                            }
+                        }
+                    }
+                }
+            }
+            exitNest:
+
+
+            std::cout << "Updating FFlags";
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::string latestFflagList;
+            CURL* req3 = curl_easy_init();
+            CURLcode res2;
+            curl_easy_setopt(req3, CURLOPT_URL, c_url);
+            curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+            curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+            curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(req3, CURLOPT_WRITEDATA, &latestFflagList);
+            res2 = curl_easy_perform(req3);
+            if (res2 != CURLE_OK) {
+                std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x8\n";
+                curl_easy_cleanup(req3);
+                std::this_thread::sleep_for(std::chrono::milliseconds(30000));
+                printMainText();
+                continue;
+            }
+            curl_easy_cleanup(req3);
+
+            std::ofstream fflagList;
+            fflagList.open(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json");
+            fflagList << latestFflagList;
+            fflagList.close();
         }
         isEnabledFile.close();
     }
