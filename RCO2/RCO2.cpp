@@ -225,7 +225,7 @@ void SetURLThread() {
                 }
             }
         }
-        exitNest:
+    exitNest:
         if (oldhost != host) { //We need to do an update!!!!
             if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings") == false) {
                 std::filesystem::create_directory(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings");
@@ -285,14 +285,14 @@ void mainThread() {
                 if (e.is_directory()) {
                     for (const auto& e2 : std::filesystem::directory_iterator(e)) {
                         if (e2.path().string().ends_with("COPYRIGHT.txt")) {
-                            robloxVersionStr = e.path().string().erase(0,robloxVersionFolder.length()+1);
+                            robloxVersionStr = e.path().string().erase(0, robloxVersionFolder.length() + 1);
                             goto exitNest;
                         }
                     }
                 }
             }
         }
-        exitNest:
+    exitNest:
         //Okay! Lets see if the flag list needs to be updated...
         string storedFflagVersion;
 
@@ -466,7 +466,7 @@ int main(int argc, char** argv) {
         goto skipUpdate;
     }
     curl_easy_cleanup(reqUpd);
-    
+
     if (rtrim(rcoVersionStr) != rtrim(curver)) {
         std::cout << rtrim(rcoVersionStr) + " " + rtrim(curver);
         STARTUPINFOA si;
@@ -478,7 +478,7 @@ int main(int argc, char** argv) {
         CreateProcessA((updDir + "\\RCO-Updater.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
         exit(0);
     }
-    skipUpdate:
+skipUpdate:
 
     if (std::filesystem::exists(robloxVersionFolder) == true && std::filesystem::exists(localRobloxVersionFolder) == true) {
         std::cout << "Detected two Roblox installs at once, please delete either " + robloxVersionFolder + " or " + localRobloxVersionFolder;
@@ -549,11 +549,13 @@ int main(int argc, char** argv) {
 
         isRcoEnabled = !isRcoEnabled;
         std::ofstream isEnabledFile;
-        isEnabledFile.open(rootDir + "\\isEnabled.rco");
         if (t == "e") {
+            isEnabledFile.open(rootDir + "\\isEnabled.rco");
             isEnabledFile << "t";
+            isEnabledFile.close();
         }
         else if (t == "d") {
+            isEnabledFile.open(rootDir + "\\isEnabled.rco");
             isEnabledFile << "f";
             std::string robloxVersionStr;
             CURL* req = curl_easy_init();
@@ -572,6 +574,7 @@ int main(int argc, char** argv) {
             if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == true) {
                 remove((robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json").c_str());
             }
+            isEnabledFile.close();
         }
         else if (t == "url") {
             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -621,7 +624,7 @@ int main(int argc, char** argv) {
                     }
                 }
             }
-            exitNest:
+        exitNest:
 
 
             std::cout << "Updating FFlags";
@@ -649,6 +652,5 @@ int main(int argc, char** argv) {
             fflagList << latestFflagList;
             fflagList.close();
         }
-        isEnabledFile.close();
     }
 }
