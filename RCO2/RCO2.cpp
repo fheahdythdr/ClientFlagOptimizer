@@ -160,7 +160,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 }
 
 void printMainText() {
-    system("cls");
     std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified by Tanki (fheahdythdr)\n\nRCO is currently: ";
     if (isRcoEnabled) {
         SetConsoleTextAttribute(hConsole, 10);
@@ -517,9 +516,7 @@ int main(int argc, char** argv) {
     buffer = string(size, ' ');
     enabledFile.seekg(0);
     enabledFile.read(&buffer[0], size);
-    if (buffer == "t") {
-        isRcoEnabled = true;
-    }
+    isRcoEnabled = (rtrim(buffer).starts_with("t"));
     enabledFile.close();
 
     //Handle Hidden Value
