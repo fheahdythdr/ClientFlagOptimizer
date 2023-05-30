@@ -418,7 +418,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    const string rcoVersionConstant = "2.1.0";
+    const string rcoVersionConstant = "2.1.1";
 
     std::ofstream rcoVerFile;
     rcoVerFile.open(rootDir + "\\programversion.rco");
