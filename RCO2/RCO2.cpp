@@ -20,6 +20,7 @@ using std::string;
 
 bool isConsoleHidden = false;
 bool isRcoEnabled = false;
+bool usingLocal = false;
 
 std::string rootDir("C:\\RCO2");
 string updDir("C:\\RCO2Updater");
@@ -182,13 +183,32 @@ void printMainText() {
         SetConsoleTextAttribute(hConsole, 7);
         std::cout << " RCO.\n\n";
     }
+    std::cout << "RCO is currently ";
+    if (usingLocal) {
+        SetConsoleTextAttribute(hConsole, 10);
+        std::cout << "using local fflag settings.";
+        SetConsoleTextAttribute(hConsole, 7);
+        std::cout << "\nType dl to ";
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout << "stop using local fflag settings.\n\n";
+        SetConsoleTextAttribute(hConsole, 7);
+    }
+    else {
+        SetConsoleTextAttribute(hConsole, 12);
+        std::cout << "not using local fflag settings.";
+        SetConsoleTextAttribute(hConsole, 7);
+        std::cout << "\nType el to ";
+        SetConsoleTextAttribute(hConsole, 10);
+        std::cout << "use local fflag settings.\n\n";
+        SetConsoleTextAttribute(hConsole, 7);
+    }
 
     SetConsoleTextAttribute(hConsole, 6);
     std::cout << "This window can be hidden via the RCO tray icon!\nYou can ";
     SetConsoleTextAttribute(hConsole, 12);
     std::cout << "close";
     SetConsoleTextAttribute(hConsole, 6);
-    std::cout << " RCO with ALT+F4 or any other similar method.\nType url to change FFlag url.\nCurrent url: " + host + "\n";
+    std::cout << " RCO with ALT+F4 or any other similar method.\nType url to change FFlag url.\nCurrent url: " + host + "\n\nType mcsf to setup the local settings json file.\n";
     SetConsoleTextAttribute(hConsole, 7);
 }
 
@@ -293,69 +313,84 @@ void mainThread() {
             }
         }
     exitNest:
-        //Okay! Lets see if the flag list needs to be updated...
-        string storedFflagVersion;
+        if (!usingLocal) {
 
-        std::ifstream flagVersionFile(rootDir + "\\flagversion.rco");
-        flagVersionFile.seekg(0, std::ios::end);
-        size_t size = flagVersionFile.tellg();
-        string buffer(size, ' ');
-        flagVersionFile.seekg(0);
-        flagVersionFile.read(&buffer[0], size);
-        storedFflagVersion = buffer;
-        flagVersionFile.close();
+            //Okay! Lets see if the flag list needs to be updated...
+            string storedFflagVersion;
 
-        std::string latestFflagVersion;
-        CURL* req2 = curl_easy_init();
-        CURLcode res2;
-        curl_easy_setopt(req2, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/flagversion.rco");
-        curl_easy_setopt(req2, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
-        curl_easy_setopt(req2, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
-        curl_easy_setopt(req2, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(req2, CURLOPT_WRITEDATA, &latestFflagVersion);
-        res2 = curl_easy_perform(req2);
-        if (res2 != CURLE_OK) {
-            std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x7\n";
-            curl_easy_cleanup(req2);
-            std::this_thread::sleep_for(std::chrono::milliseconds(30000));
-            printMainText();
-            continue;
-        }
-        curl_easy_cleanup(req2);
+            std::ifstream flagVersionFile(rootDir + "\\flagversion.rco");
+            flagVersionFile.seekg(0, std::ios::end);
+            size_t size = flagVersionFile.tellg();
+            string buffer(size, ' ');
+            flagVersionFile.seekg(0);
+            flagVersionFile.read(&buffer[0], size);
+            storedFflagVersion = buffer;
+            flagVersionFile.close();
 
-        if (storedFflagVersion != (latestFflagVersion + ' ') || std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == false || oldhost != host) { //We need to do an update!!!!
-            if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings") == false) {
-                std::filesystem::create_directory(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings");
-            }
-
-            std::string latestFflagList;
-            CURL* req3 = curl_easy_init();
+            std::string latestFflagVersion;
+            CURL* req2 = curl_easy_init();
             CURLcode res2;
-            curl_easy_setopt(req3, CURLOPT_URL, host);
-            curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
-            curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
-            curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
-            curl_easy_setopt(req3, CURLOPT_WRITEDATA, &latestFflagList);
-            res2 = curl_easy_perform(req3);
+            curl_easy_setopt(req2, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/rco-but-it-uses-different-fflags/main/flagversion.rco");
+            curl_easy_setopt(req2, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+            curl_easy_setopt(req2, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+            curl_easy_setopt(req2, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(req2, CURLOPT_WRITEDATA, &latestFflagVersion);
+            res2 = curl_easy_perform(req2);
             if (res2 != CURLE_OK) {
-                std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x8\n";
-                curl_easy_cleanup(req3);
+                std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x7\n";
+                curl_easy_cleanup(req2);
                 std::this_thread::sleep_for(std::chrono::milliseconds(30000));
                 printMainText();
                 continue;
             }
-            curl_easy_cleanup(req3);
+            curl_easy_cleanup(req2);
 
+            if (storedFflagVersion != (latestFflagVersion + ' ') || std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == false || oldhost != host) { //We need to do an update!!!!
+                if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings") == false) {
+                    std::filesystem::create_directory(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings");
+                }
+
+                std::string latestFflagList;
+                CURL* req3 = curl_easy_init();
+                CURLcode res2;
+                curl_easy_setopt(req3, CURLOPT_URL, host);
+                curl_easy_setopt(req3, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+                curl_easy_setopt(req3, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+                curl_easy_setopt(req3, CURLOPT_WRITEFUNCTION, WriteCallback);
+                curl_easy_setopt(req3, CURLOPT_WRITEDATA, &latestFflagList);
+                res2 = curl_easy_perform(req3);
+                if (res2 != CURLE_OK) {
+                    std::cout << "\nNETWORK ERROR | PLEASE CHECK YOUR INTERNET CONNECTION | TRYING AGAIN IN 30 SECONDS. | 0x8\n";
+                    curl_easy_cleanup(req3);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(30000));
+                    printMainText();
+                    continue;
+                }
+                curl_easy_cleanup(req3);
+
+                std::ofstream fflagList;
+                fflagList.open(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json");
+                fflagList << latestFflagList;
+                fflagList.close();
+
+                //Update the flag version file since we just updated the flags!
+                std::ofstream flagversion;
+                flagversion.open(rootDir + "\\flagversion.rco");
+                flagversion << latestFflagVersion;
+                flagversion.close();
+            }
+        }
+        else {
+            std::ifstream local;
+            local.open(rootDir + "\\custom_settings.json");
+            local.seekg(0, std::ios::end);
+            size_t size = local.tellg();
+            string buffer(size, ' ');
+            local.seekg(0);
             std::ofstream fflagList;
             fflagList.open(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json");
-            fflagList << latestFflagList;
+            fflagList << buffer;
             fflagList.close();
-
-            //Update the flag version file since we just updated the flags!
-            std::ofstream flagversion;
-            flagversion.open(rootDir + "\\flagversion.rco");
-            flagversion << latestFflagVersion;
-            flagversion.close();
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(30000)); //We check for fflag updates every 30 seconds.
@@ -435,6 +470,13 @@ int main(int argc, char** argv) {
         isEnabledFile.open(rootDir + "\\isEnabled.rco");
         isEnabledFile << "f";
         isEnabledFile.close();
+    }
+
+    if (std::filesystem::exists(rootDir + "\\usingLocal.rco") == false) {
+        std::ofstream usingLocalFile;
+        usingLocalFile.open(rootDir + "\\usingLocal.rco");
+        usingLocalFile << "f";
+        usingLocalFile.close();
     }
 
     //Check for program updates
@@ -520,6 +562,15 @@ int main(int argc, char** argv) {
     isRcoEnabled = (rtrim(buffer).starts_with("t"));
     enabledFile.close();
 
+    std::ifstream enabledLocalFile(rootDir + "\\usingLocal.rco");
+    enabledLocalFile.seekg(0, std::ios::end);
+    size = enabledLocalFile.tellg();
+    buffer = string(size, ' ');
+    enabledLocalFile.seekg(0);
+    enabledLocalFile.read(&buffer[0], size);
+    usingLocal = (rtrim(buffer).starts_with("t"));
+    enabledLocalFile.close();
+
     //Handle Hidden Value
     if (isConsoleHidden) {
         ShowWindow(consoleWindow, SW_HIDE);
@@ -540,6 +591,7 @@ int main(int argc, char** argv) {
 
     //Input loop
     while (true) {
+        system("cls");
         printMainText();
         string t; //Throwaway
         std::getline(std::cin, t);
@@ -554,6 +606,7 @@ int main(int argc, char** argv) {
         else if (t == "d") {
             isEnabledFile.open(rootDir + "\\isEnabled.rco");
             isEnabledFile << "f";
+            isEnabledFile.close();
             std::string robloxVersionStr;
             CURL* req = curl_easy_init();
             CURLcode res;
@@ -571,7 +624,45 @@ int main(int argc, char** argv) {
             if (std::filesystem::exists(robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json") == true) {
                 remove((robloxVersionFolder + "\\" + robloxVersionStr + "\\ClientSettings\\ClientAppSettings.json").c_str());
             }
-            isEnabledFile.close();
+        }
+        else if (t == "el") {
+            usingLocal = true;
+            std::ofstream usingLocalFile;
+            usingLocalFile.open(rootDir + "\\usingLocal.rco");
+            usingLocalFile << "t";
+            usingLocalFile.close();
+        }
+        else if (t == "dl") {
+            usingLocal = false;
+            std::ofstream usingLocalFile;
+            usingLocalFile.open(rootDir + "\\usingLocal.rco");
+            usingLocalFile << "f";
+            usingLocalFile.close();
+        }
+        else if (t == "mcsf") {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            string c_s; //Throwaway
+            std::cout << "Enter url to copy:\n";
+            std::getline(std::cin, c_s);
+            std::string content;
+            CURL* reqUpd = curl_easy_init();
+            CURLcode resUpd;
+            curl_easy_setopt(reqUpd, CURLOPT_URL, c_s);
+            curl_easy_setopt(reqUpd, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
+            curl_easy_setopt(reqUpd, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
+            curl_easy_setopt(reqUpd, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(reqUpd, CURLOPT_WRITEDATA, &content);
+            resUpd = curl_easy_perform(reqUpd);
+            if (resUpd != CURLE_OK) {
+                curl_easy_cleanup(reqUpd);
+                std::cout << "\nNETWORK ERROR | FAILED TO GET CUSTOM SETTINGS FILE | 0x10\n";
+                std::cin.get();
+            }
+            curl_easy_cleanup(reqUpd);
+            std::ofstream url;
+            url.open(rootDir + "\\custom_settings.json");
+            url << content;
+            url.close();
         }
         else if (t == "url") {
             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -582,14 +673,8 @@ int main(int argc, char** argv) {
             url.open(rootDir + "\\custom_url.txt");
             url << c_url;
             url.close();
-
-            std::ifstream ifs(rootDir + "\\custom_url.txt");;
-            if (ifs) {
-                std::string contents((std::istreambuf_iterator<char>(ifs)),
-                    (std::istreambuf_iterator<char>()));
-                oldhost = host;
-                host = c_url;
-            }
+            oldhost = host;
+            host = c_url;
 
             //Bit of error checking
             std::string robloxVersionStr;
