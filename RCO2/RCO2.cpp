@@ -383,7 +383,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    const string rcoVersionConstant = "2.0.9";
+    const string rcoVersionConstant = "2.1.0";
 
     std::ofstream rcoVerFile;
     rcoVerFile.open(rootDir + "\\programversion.rco");
@@ -468,7 +468,6 @@ int main(int argc, char** argv) {
     curl_easy_cleanup(reqUpd);
 
     if (rtrim(rcoVersionStr) != rtrim(curver)) {
-        std::cout << rtrim(rcoVersionStr) + " " + rtrim(curver);
         STARTUPINFOA si;
         PROCESS_INFORMATION pi;
 
@@ -478,7 +477,7 @@ int main(int argc, char** argv) {
         CreateProcessA((updDir + "\\RCO-Updater.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
         exit(0);
     }
-skipUpdate:
+    skipUpdate:
 
     if (std::filesystem::exists(robloxVersionFolder) == true && std::filesystem::exists(localRobloxVersionFolder) == true) {
         std::cout << "Detected two Roblox installs at once, please delete either " + robloxVersionFolder + " or " + localRobloxVersionFolder;
