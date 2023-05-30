@@ -47,7 +47,7 @@ When using a custom URL, features will depend on what gets activated in the url.
 
 ## Using custom URLS
 
-Simply type URL, and enter the raw .json url you have after being prompted to.
+Simply type url in the console, and enter the raw .json url you have after being prompted to enter one.
 
 It has to be the raw URL that gives the raw JSON, like raw github urls.
 
