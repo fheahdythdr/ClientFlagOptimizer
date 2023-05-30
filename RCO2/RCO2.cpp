@@ -161,7 +161,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 void printMainText() {
     system("cls");
-    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified, now maintained by Tanki (fheahdythdr)\n\nRCO is currently: ";
+    std::cout << "Roblox Client Optimizer coded by Kaede | FFlag list maintained by L8X | Modified by Tanki (fheahdythdr)\n\nRCO is currently: ";
     if (isRcoEnabled) {
         SetConsoleTextAttribute(hConsole, 10);
         std::cout << "Enabled";
