@@ -1,12 +1,16 @@
 -- todo --
 
 link libraries to exe
-learn more c++ so i can make changing urls bound to a key in the console
 figure out how to detect file creation, then detect file changes if said file's name is custom_url.txt
-implement the 3 keys you can press in src repo's latest js files (i - install, u - uninstall, q - quit)
 
 -- in progress --
 
 
 
 -- finished --
+
+learn more c++ so i can make changing urls bound to a key in the console
+
+-- cancelled/stopped + reason --
+
+implement the 3 keys you can press in src repo's latest js files (i - install, u - uninstall, q - quit), reason: not necessary, installer can already be quit with the X in the top right, and RCO2 itself can be stopped with alt f4
