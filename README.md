@@ -53,6 +53,10 @@ It has to be the raw URL that gives the raw JSON, like raw github urls.
 
 If you want some configs, go to [my fflag repo](https://github.com/fheahdythdr/rco-fflags)
 
+If you want to use local settings, just do file:///path/to/json (ex. file:///C:\RCO2\custom_settings.json)
+
+You are able to directly clone a raw JSON url for ease of use.
+
 ### GDPR, CCPA & Coppa Disclosure
 
 We are **NOT** a data handler or processor, for any queries relating to data transmitted via the network traffic of Roblox Client Optimizer (keep in mind your IP address is disclosed to every website you visit), please contact [Cloudfare](https://www.cloudfare.com), [Fastly](https://www.fastly.com), and [Microsoft](https://www.microsoft.com) directly.
