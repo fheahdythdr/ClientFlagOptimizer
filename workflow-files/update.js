@@ -14,6 +14,6 @@
             New[name] = Settings[name];
         }
     }
-    fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(New));
+    fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(New, null, 2));
     fs.writeFileSync('./rco-but-it-uses-different-fflags/flagversion.rco', fflagver);
 })()
