@@ -8,9 +8,12 @@ This repo is staying in C++, and I will try my best to implement any features th
 
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
+The main RCO has been fully removed, reasonings being explained [here](https://cw.rfo.sh/)
+
+No more auto-updating FFlags.
+
 ## Features
 
-When using the source repo's URL (https://roblox-client-optimizer.simulhost.com/ClientAppSettings.json), you'll get these.
 - Unlocks FPS (frames per second)
 - Optimizes caching, graphics, and textures
 - Increases user privacy
