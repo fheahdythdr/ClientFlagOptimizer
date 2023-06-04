@@ -20,6 +20,8 @@ i am not entirely sure what makes it be considered compromised, however my code 
 
 if you do not trust it, manually add the FFlags to your roblox dir
 
+i am remaking this in NodeJS with a custom installer if you don't feel like using this one
+
 ## Features
 
 - Unlocks FPS (frames per second)
