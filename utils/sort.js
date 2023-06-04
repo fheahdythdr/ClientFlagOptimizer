@@ -34,5 +34,5 @@ const includes = ["FFlag"];
             New[name] = Settings[name];
         }
     }
-    fs.writeFileSync(__dirname + '/test.json', JSON.stringify(New));
+    fs.writeFileSync(__dirname + '/test.json', JSON.stringify(New, null, 2));
 })()
