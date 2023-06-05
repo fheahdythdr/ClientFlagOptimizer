@@ -8,8 +8,6 @@ This repo is staying in C++, and I will try my best to implement any features th
 
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
-I'm not sure if the main RCO is compromised anymore.
-
 ## Features
 
 - Unlocks FPS (frames per second)
