@@ -8,19 +8,7 @@ This repo is staying in C++, and I will try my best to implement any features th
 
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
-The main RCO has been fully removed, reasonings being explained [here](https://cw.rfo.sh/)
-
-l8x is no longer trusted by the RCO community so i've removed all auto-updating of the fflags.
-
-you will have to manually find optimizing variables at the link above or within the [RBXFlags org](https://github.com/rbxflags)
-
-if you want to remove the original RCO, [use this](https://github.com/Knewest/Remove-RCO2.exe-Completely)
-
-i am not entirely sure what makes it be considered compromised, however my code should hopefully still be safe.
-
-if you do not trust it, manually add the FFlags to your roblox dir
-
-i am remaking this in NodeJS with a custom installer if you don't feel like using this one
+I'm not sure if the main RCO is compromised anymore.
 
 ## Features
 
