@@ -8,6 +8,8 @@ This repo is staying in C++, and I will try my best to implement any features th
 
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
+I will very likely not be updating any FVars at the moment, however you can create custom FVar jsons.
+
 ## Features
 
 - Unlocks FPS (frames per second)
