@@ -1,10 +1,6 @@
 ## About
 
-Roblox Client Optimizer tweaks flags to optimize your Roblox client. Click [here](https://github.com/fheahdythdr/rco-but-it-uses-different-fflags/releases) to download our latest version.
-
-As of now, it seems like the main RCO repo is going towards using NodeJS to run the installer and the main file.
-
-This repo is staying in C++, and I will try my best to implement any features they add into this version.
+This optimizes your Roblox client's FVars. Uses RFO's flags provided in their discord. Click [here](https://github.com/fheahdythdr/ClientFlagOptimizer/releases) to download the latest installer.
 
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
@@ -16,8 +12,8 @@ Simply type url in the console, and enter the raw .json url you have after being
 
 It has to be the raw URL that gives the raw JSON, like raw github urls.
 
-If you want some configs, go to [my fflag repo](https://github.com/fheahdythdr/rco-fflags)
+If you want some configs, go to [my fflag repo](https://github.com/fheahdythdr/fflags)
 
-If you want to use local settings, just do file:///path/to/json (ex. file:///C:\RCO2\custom_settings.json)
+If you want to use local settings, just do file:///path/to/json (ex. file:///C:\CFO\custom_settings.json)
 
 You are able to directly clone a raw JSON url for ease of use by typing mcsf and entering a URL.
