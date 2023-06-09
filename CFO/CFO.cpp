@@ -307,7 +307,7 @@ void mainThread() {
         std::string latestFflagVersion;
         CURL* req2 = curl_easy_init();
         CURLcode res2;
-        curl_easy_setopt(req2, CURLOPT_URL, "https://raw.githubusecfontent.com/fheahdythdr/ClientFlagOptimizer/main/flagversion.cfo");
+        curl_easy_setopt(req2, CURLOPT_URL, "https://raw.githubusercontent.com/fheahdythdr/ClientFlagOptimizer/main/flagversion.cfo");
         curl_easy_setopt(req2, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS); // add HTTP/2 support for speed gains
         curl_easy_setopt(req2, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2); // force TLSv1.2 support as HTTP/2 requires it
         curl_easy_setopt(req2, CURLOPT_WRITEFUNCTION, WriteCallback);
