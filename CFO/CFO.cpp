@@ -376,7 +376,7 @@ int main(int argc, char** argv) {
     free(buf);
 
     if (std::filesystem::exists(rootDir) == false) {
-        std::cout << "Could not find proper RCO files, please reinstall RCO | 0x1\n";
+        std::cout << "Could not find proper CFO files, please reinstall CFO | 0x1\n";
         std::cin.get();
         return 1;
     }
@@ -466,7 +466,7 @@ int main(int argc, char** argv) {
     resUpd = curl_easy_perform(reqUpd);
     if (resUpd != CURLE_OK) {
         curl_easy_cleanup(reqUpd);
-        std::cout << "\nNETWORK ERROR | FAILED TO CHECK FOR PROGRAM UPDATES | 0xC | RCO can still continue, but you may encounter issues, press enter to continue anyways...\n";
+        std::cout << "\nNETWORK ERROR | FAILED TO CHECK FOR PROGRAM UPDATES | 0xC | CFO can still continue, but you may encounter issues, press enter to continue anyways...\n";
         std::cin.get();
         goto skipUpdate;
     }
@@ -479,7 +479,7 @@ int main(int argc, char** argv) {
         ZeroMemory(&si, sizeof(si));
         si.cb = sizeof(si);
         ZeroMemory(&pi, sizeof(pi));
-        CreateProcessA((updDir + "\\RCO-Updater.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+        CreateProcessA((updDir + "\\CFO-Updater.exe").c_str(), argv[1], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
         exit(0);
     }
     skipUpdate:
