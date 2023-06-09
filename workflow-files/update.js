@@ -14,8 +14,6 @@
             New[name] = Settings[name];
         }
     }*/
-    fs.writeFileSync('./rco-but-it-uses-different-fflags/ClientAppSettings.json', JSON.stringify(Settings, null, 2));
-    //fs.writeFileSync('./rco-but-it-uses-different-fflags/flagversion.rco', fflagver);
+    fs.writeFileSync('./ClientFlagOptimizer/ClientAppSettings.json', JSON.stringify(Settings, null, 2));
+    //fs.writeFileSync('./ClientFlagOptimizers/flagversion.rco', fflagver);
 })()
-
-// wrong commit message lol
