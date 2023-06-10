@@ -363,7 +363,7 @@ void mainThread() {
 int main(int argc, char** argv) {
     SetHost();
     //Preinit
-    SetConsoleTitle(L"Roblox Client Optimizer");
+    SetConsoleTitle(L"Client Flag Optimizer");
 
     if (!(_dupenv_s(&buf, &sz, "localappdata") == 0 && buf != nullptr)) {
         std::cout << "Error finding LocalAppData folder | 0xB\n";
@@ -381,12 +381,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    const string cfoVersionConstant = "2.1.2";
-
-    std::ofstream cfoVerFile;
-    cfoVerFile.open(rootDir + "\\programversion.cfo");
-    cfoVerFile << cfoVersionConstant;
-    cfoVerFile.close();
+    const string cfoVersionConstant = "2.1.3";
 
     if (std::filesystem::exists(rootDir + "\\animegirl.ico") == false) {
         FILE* file;
@@ -433,13 +428,6 @@ int main(int argc, char** argv) {
         isEnabledFile.open(rootDir + "\\isEnabled.cfo");
         isEnabledFile << "f";
         isEnabledFile.close();
-    }
-
-    if (std::filesystem::exists(rootDir + "\\usingLocal.cfo") == false) {
-        std::ofstream usingLocalFile;
-        usingLocalFile.open(rootDir + "\\usingLocal.cfo");
-        usingLocalFile << "f";
-        usingLocalFile.close();
     }
 
     //Check for program updates
