@@ -6,6 +6,10 @@ If any errors happen, create an issue and try to explain what happened or provid
 
 I will very likely not be updating any FVars at the moment, however you can create custom FVar jsons.
 
+Will be migrating to [this other repo](https://github.com/fheahdythdr/JCO) soon, as RFO's JS api is now a thing.
+
+JCO will still be using a C++ frontend to install everything needed and be able to go into the tray, because there's no real way to do so in NodeJS as far as I know.
+
 ## Using custom URLS
 
 Simply type url in the console, and enter the raw .json url you have after being prompted to enter one.
