@@ -16,8 +16,6 @@ Simply type url in the console, and enter the raw .json url you have after being
 
 It has to be the raw URL that gives the raw JSON, like raw github urls.
 
-If you want some configs, go to [my fflag repo](https://github.com/fheahdythdr/fflags)
-
 If you want to use local settings, just do file:///path/to/json (ex. file:///C:\CFO\custom_settings.json)
 
 You are able to directly clone a raw JSON url for ease of use by typing mcsf and entering a URL.
