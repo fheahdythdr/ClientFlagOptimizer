@@ -2,6 +2,8 @@
 
 This optimizes your Roblox client's FVars. Uses RFO's flags provided in their discord. Click [here](https://github.com/fheahdythdr/ClientFlagOptimizer/releases) to download the latest installer.
 
+Also, join [RFO's discord!](https://dc.rfo.sh/)
+
 If any errors happen, create an issue and try to explain what happened or provide a video of what happened.
 
 I will very likely not be updating any FVars at the moment, however you can create custom FVar jsons.
