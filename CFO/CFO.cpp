@@ -26,7 +26,7 @@ string updDir("C:\\CFOUpdater");
 string robloxVersionFolder;
 string localRobloxVersionFolder;
 
-std::string host = "https://raw.githubusercontent.com/fheahdythdr/ClientFlagOptimizer/main/ClientAppSettings.json";
+std::string host = "https://raw.githubusercontent.com/rbxflags/Flags/main/ClientAppSettings.json";
 std::string oldhost;
 
 static auto WriteCallback(char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t { //Thank you stackoverflow... (https://stackoverflow.com/a/60516083)
@@ -160,7 +160,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 void printMainText() {
     system("cls");
-    std::cout << "Original coded by Kaede (original is not named due to drama) | Modified by Tanki (fheahdythdr)\n\nCFO is currently: ";
+    std::cout << "Original coded by Kaede | New versions of original: https://dc.rfo.sh/ | Modified by Tanki (fheahdythdr)\n\nCFO is currently: ";
     if (isRcoEnabled) {
         SetConsoleTextAttribute(hConsole, 10);
         std::cout << "Enabled";
@@ -381,7 +381,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    const string cfoVersionConstant = "2.1.3";
+    const string cfoVersionConstant = "2.1.4";
 
     if (std::filesystem::exists(rootDir + "\\animegirl.ico") == false) {
         FILE* file;
